@@ -29,7 +29,7 @@ context [
 	drw: clear []
 	i: 0
 	collect/into [
-		foreach [phase freq amp] lines [
+		foreach [_ _ amp] lines [
 			keep/only compose/deep [
 				matrix [1 0 0 1 0 0] [
 					pen silver circle 0x0 (amp) 
