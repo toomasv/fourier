@@ -18,13 +18,11 @@ dftc: function [x][
 	TWO_PI: 2 * pi
 	repeat k N* [
 		sum: copy [0 0]
-		print ["k:" k]
 		repeat n N* [
 			phi: TWO_PI * (k - 1) * (n - 1) / N*
 			c: reduce [cos phi negate sin phi]
 			addc sum multc x/:n c
 		]
-		probe sum
 		sum/1: sum/1 / N*
 		sum/2: sum/2 / N*
 		freq: k - 1
