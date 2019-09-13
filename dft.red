@@ -1,6 +1,6 @@
 Red [
 	Description: "Discrete Fourier Transform"
-	Date: 12-Seop-2019
+	Date: 12-Sep-2019
 	Author: "Toomas Vooglaid"
 ]
 dft: function [x][
