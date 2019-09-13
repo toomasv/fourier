@@ -85,7 +85,8 @@ context [
 	lay: layout/tight [
 		title "Red-logo"
 		;at 0x0 can: image 1000x900 canvas
-		at 0x0 dr: box 1000x900 with [draw: copy [line]]
+		; Change `spline` to `line` for strighter lines
+		at 0x0 dr: box 1000x900 with [draw: copy [spline]]
 		bx: box 1000x900 0.0.0.254 with [
 			draw: drw
 			actors: object [
