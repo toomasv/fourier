@@ -17,9 +17,9 @@ context [
 	]
 	lines: copy [
 		;phase 	freq 	amp
-		  0 	 1 		100
-		  0	 3 	 	 50
-		  0	 5		 40
+		  0 	 1 	100
+		  0	 3 	 50
+		  0	 5	 40
 	]
 	}
 	lines: collect [forall ft [keep reduce [ft/1/3 ft/1/4 ft/1/5]]]
