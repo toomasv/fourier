@@ -18,7 +18,7 @@ dft: function [x][
 		freq: k - 1
 		amp: sqrt (re ** 2) + (im ** 2)
 		phase: arctangent2 im re
-		append/only X* reduce [re im phase freq amp]
+		append/only X* reduce [phase freq amp]
 	]
 	;foreach z X* [print z]
 	X*

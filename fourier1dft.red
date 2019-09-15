@@ -6,15 +6,22 @@ Red [
 ]
 context [
 	#include %dft.red
-	ft: dft collect [repeat i 100 [keep i]]
+	lines: dft points: [
+		100 100 100 100 100 100 100 100 100 100 100 100 
+		100 100 100 100 100 100 100 100 100 100 100 100 
+		-100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100
+		-100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100
+		100 100 100 100 100 100 100 100 100 100 100 100 
+		100 100 100 100 100 100 100 100 100 100 100 100 
+		-100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100
+		-100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100
+	]
 
 	comment {
+	collect [repeat i 100 [keep i]]
 	collect [loop 36 [keep random 200]]
 	[100 0 50 50 75 -23]
-	[
-	100 100 100 -100 -100 -100 
-	100 100 100 -100 -100 -100 
-	]
+	
 	lines: copy [
 		;phase 	freq 	amp
 		  0 	 1 	100
@@ -22,18 +29,17 @@ context [
 		  0	 5	 40
 	]
 	}
-	lines: collect [forall ft [keep reduce [ft/1/3 ft/1/4 ft/1/5]]]
-
-	sort/skip/compare/all lines 3 func [a b][a/3 > b/3]
+	
+	sort/compare lines func [a b][a/3 < b/3]
 
 	drw: clear []
 	i: 0
 	collect/into [
-		foreach [_ _ amp] lines [
+		forall lines [
 			keep/only compose/deep [
 				matrix [1 0 0 1 0 0] [
-					pen silver circle 0x0 (amp) 
-					pen blue rotate 0 0x0 [line 0x0 (as-pair round amp 0)]
+					pen silver circle 0x0 (lines/1/3) ;amplitude 
+					pen blue rotate 0 0x0 [line 0x0 (as-pair round lines/1/3 0)]
 				]
 				reset-matrix
 			]
@@ -42,12 +48,13 @@ context [
 	dlt: 2
 	dx: dlt + 1
 	time: 0
-	dt: 360.0 / length? ft
+	dt: 360.0 / length? points
 	code: [
 		draw: head face/draw
 		x0: 300 y0: 300
 		time: time + dt
-		foreach [phase freq amp] lines [
+		forall lines [
+			set [phase freq amp] lines/1
 			draw/1/2/5: x0 
 			draw/1/2/6: y0
 			ang: draw/1/3/9: (time * freq + phase - 90) 
@@ -55,16 +62,16 @@ context [
 			y0: y0 + (amp * sine ang)
 			draw: next draw
 		]
-		;poke can/image as-pair dx: dx + dlt y0 black
-		dr/draw/2/x: dr/draw/2/x + dlt
-		insert at dr/draw 4 as-pair dx: dx - dlt y0
-		if 400 < (dlt * length? dr/draw) [clear at dr/draw 400 / dlt]
+		;poke can/image as-pair dx: dx + dlt y0 orange
+		dr/draw/4/x: dr/draw/4/x + dlt
+		insert at dr/draw 6 as-pair dx: dx - dlt y0
+		if 500 < (dlt * length? dr/draw) [clear at dr/draw 500 / dlt]
 		show face/parent
 	]
-	;canvas: draw 600x600 [fill-pen white] 
+	canvas: draw 600x600 [fill-pen white] 
 	lay: layout/tight [
 		;at 0x0 can: image 1000x600 canvas
-		at 0x0 dr: box 1000x600 white with [draw: copy [translate 400x0 line]]
+		at 0x0 dr: box 1000x600 0.0.0.254 with [draw: copy [pen 0.0.0.128 translate 400x0 line]]
 		bx: box 1000x600 0.0.0.254 with [
 			draw: drw
 			actors: object [

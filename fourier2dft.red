@@ -18,23 +18,20 @@ context [
 	px: collect [forall points [keep points/1/x - (mx/x - mn/x / 2)]]
 	py: collect [forall points [keep points/1/y - (mx/y - mn/y / 2)]]
 
-	ftx: dft px
-	fty: dft py
+	linesx: dft px
+	linesy: dft py
 
-	linesx: collect [forall ftx [keep reduce [ftx/1/3 ftx/1/4 ftx/1/5]]]
-	linesy: collect [forall fty [keep reduce [fty/1/3 fty/1/4 fty/1/5]]]
-
-	sort/skip/compare/all linesx 3 func [a b][a/3 > b/3]
-	sort/skip/compare/all linesy 3 func [a b][a/3 > b/3]
+	comp: func [a b][a/3 < b/3]
+	sort/compare linesx :comp
+	sort/compare linesy :comp
 
 	drw: clear []
-
 	make-draw: func [lines [block!]][
-		foreach [_ _ amp] lines [
+		forall lines [
 			append/only drw compose/deep [
 				matrix [1 0 0 1 0 0] [
-					pen silver circle 0x0 (amp) 
-					pen blue rotate 0 0x0 [line 0x0 (as-pair round amp 0)]
+					pen silver circle 0x0 (lines/1/3) ;amplitude
+					pen blue rotate 0 0x0 [line 0x0 (as-pair round lines/1/3 0)]
 				]
 				reset-matrix
 			]
@@ -49,10 +46,11 @@ context [
 	]
 	
 	time: 0
-	dt: 360.0 / length? ftx
+	dt: 360.0 / length? points
 
 	increment: func [lines [block!] x [integer! float!] y [integer! float!] /rotate][
-		foreach [phase freq amp] lines [
+		forall lines [
+			set [phase freq amp] lines/1
 			draw/1/2/5: x
 			draw/1/2/6: y
 			rot: pick [90 0] rotate

@@ -28,7 +28,9 @@ dftc: function [x][
 		freq: k - 1
 		amp: sqrt (sum/1 ** 2) + (sum/2 ** 2)
 		phase: arctangent2 sum/2 sum/1
-		append/only X* reduce [sum/1 sum/2 phase freq amp]
+		;if amp >= 0.1 [
+			append/only X* reduce [phase freq amp]
+		;]
 	]
 	;foreach z X* [print z]
 	X*
