@@ -38,7 +38,6 @@ context [
 		x0: 300 y0: 300
 		time: time + dt
 		draw: head face/draw
-		;lines: head lines
 		forall lines [
 			set [phase freq amp] lines/1
 			draw/1/2/5: x0 
@@ -48,15 +47,14 @@ context [
 			y0: y0 + (amp * sine ang)
 			draw: next draw
 		]
-		;poke can/image as-pair x0 y0 black
+		;poke can/image as-pair x0 y0 black  ;for dotty figure
 		insert at dr/draw 6 as-pair x0 y0
 		show face/parent
 	]
-	;canvas: draw 600x600 [fill-pen white]
+	;canvas: draw 600x600 [fill-pen white]  ;for dotty figure
 	lay: layout/tight compose [
-		;at 0x0 can: image 600x600 canvas
+		;at 0x0 can: image 600x600 canvas  ;for dotty figure
 		at 0x0 dr: box 600x600 white with [draw: copy [line-width 2 pen orange spline]]
-		below
 		bx: box 600x600 0.0.0.254 with [
 			draw: drw
 			actors: object [
