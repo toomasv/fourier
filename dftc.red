@@ -19,9 +19,14 @@ multc: function [c1 c2][
 ]
 
 ;DFT for complex numbers
-dftc: function [x][
-	x: copy/deep x
-	X*: make block! N*: length? x
+dftc: function [points][
+	X*: make block! N*: length? points
+	;convert to complex if pairs
+	if pair? points/1 [
+		forall points [
+			points/1: reduce [points/1/x points/1/y]
+		]
+	]
 	TWO_PI: 2 * pi
 	repeat k N* [; fore each frequency
 		sum: copy [0 0]
@@ -32,7 +37,7 @@ dftc: function [x][
 			c: reduce [cos phi   negate sin phi]
 			;multiply point's value with unit angle at this point and..
 			;sum results for this frequency 
-			addc sum multc x/:n c
+			addc sum multc points/:n c
 		]
 		;average sum for this frequency
 		sum/1: sum/1 / N*

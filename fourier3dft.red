@@ -14,13 +14,9 @@ context [
 	half: (max* points) / 2
 	forall points [points/1: points/1 - half]
 	
-	forall points [
-		points/1: reduce [points/1/x points/1/y]
-	]
-	
-	probe length? lines: dftc points
+	lines: dftc points
 	sort/compare lines func [a b][a/3 < b/3]
-	;clear at lines len / 2
+	;clear at lines len / 2 ;experimental removal of high frequencies
 		
 	drw: clear []
 	collect/into [
