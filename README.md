@@ -13,7 +13,7 @@ For collecting points use `%trace.red`
 
 Contextual menu on image:
 ```
-Load - load new (or reload same) file (together with earlier saved points if any)
+Load - load new (or reload same) image (together with earlier saved points if any)
 Save - save points into file with same name as picture, but without suffix
 Hide/Show - hide/show points or lines
 Wheel - zoom in/out
