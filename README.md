@@ -9,7 +9,7 @@ click - stop/re-activate
 alt-drag - move 
 ```
 
-In `%trace.png`
+For collecting points use `%trace.red`
 
 Contextual menu on image:
 ```
