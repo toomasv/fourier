@@ -28,7 +28,7 @@ dftc: function [points][
 		]
 	]
 	TWO_PI: 2 * pi
-	repeat k N* [; fore each frequency
+	repeat k N* [; for each frequency
 		sum: copy [0 0]
 		repeat n N* [; for each point
 			;unit-angle: period's fraction at this point times frequency
@@ -45,7 +45,7 @@ dftc: function [points][
 		amp: sqrt (sum/1 ** 2) + (sum/2 ** 2)
 		;					im    re
 		phase: arctangent2 sum/2 sum/1
-		;if amp >= 0.1 [ ;experimental filtering out short amplitudes
+		;if amp >= .2 [ ;experimental filtering out short amplitudes
 			append/only X* reduce [phase freq amp]
 		;]
 	]
