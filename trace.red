@@ -1,4 +1,10 @@
-Red []
+Red [
+	Description: {For collecting points from picture}
+	File: %trace.red
+	Needs: 'View
+	Date: 17-Sep-2019
+	Author: "Toomas Vooglaid"
+]
 context [
 	file: none;%gregg.png
 	;pic: load file;%gregg.png ;%coffee.png;%world.png 
