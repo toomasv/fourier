@@ -125,7 +125,6 @@ context [
 								any [s:
 									pair! if (all [
 										1 < length? s 
-										probe copy/part s 2
 										mn: min s/1 s/2
 										mx: max s/1 s/2
 										within? point mn - (5 op2 sc: face/draw/matrix/1) mx - mn + (10 op2 sc)
