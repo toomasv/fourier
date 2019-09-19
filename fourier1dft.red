@@ -4,20 +4,31 @@ Red [
 	Date: 12-Sep-2019
 	Author: {Toomas Vooglaid}
 ]
-context [
+;context [
+	max*: function [blk [block!]][m: 0 foreach b blk [m: max b m] m]
+	min*: function [blk [block!]][m: blk/1 foreach b blk [m: min b m] m]
+	avg*: function [blk [block!]][to-integer 1.0 * (sum blk) / length? blk]
 	#include %dft.red
-	lines: dft points: [
-		100 100 100 100 100 100 100 100 100 100 100 100 
-		100 100 100 100 100 100 100 100 100 100 100 100 
-		-100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100
-		-100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100
-		100 100 100 100 100 100 100 100 100 100 100 100 
-		100 100 100 100 100 100 100 100 100 100 100 100 
-		-100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100
-		-100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100
-	]
-
+points: collect [foreach letter {Red [
+	Description: {Play-ground to study Discrete Fourier Transform}
+	Needs: View
+	Date: 12-Sep-2019
+	Author: {Toomas Vooglaid}
+]} [keep to-integer letter]]
+probe avg: avg* points
+forall points [points/1: points/1 - avg]
+	lines: dft head points
 	comment {
+	[
+		100 100 100 100 100 100 100 100 100 100 100 100 
+		100 100 100 100 100 100 100 100 100 100 100 100 
+		-100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100
+		-100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100
+		100 100 100 100 100 100 100 100 100 100 100 100 
+		100 100 100 100 100 100 100 100 100 100 100 100 
+		-100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100
+		-100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100
+	]	
 	collect [repeat i 100 [keep i]]
 	collect [loop 36 [keep random 200]]
 	[100 0 50 50 75 -23]
@@ -39,13 +50,13 @@ context [
 			keep/only compose/deep [
 				matrix [1 0 0 1 0 0] [
 					pen silver circle 0x0 (lines/1/3) ;amplitude 
-					pen blue rotate 0 0x0 [line 0x0 (as-pair round lines/1/3 0)]
+					pen blue rotate 0 0x0 [scale (lines/1/3) 1 line 0x0 1x0]
 				]
 				reset-matrix
 			]
 		]
 	] drw
-	dlt: 2
+	dlt: 3
 	dx: dlt + 1
 	time: 0
 	dt: 360.0 / length? points
@@ -86,4 +97,4 @@ context [
 	]
 	system/view/auto-sync?: off
 	view lay
-]
+;]

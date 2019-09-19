@@ -12,7 +12,7 @@ context [
 	;][
 	;	load %wrl;%f-points
 	;]
-	points: load %wrl ;%f-points ;
+	points: load %coffee ;%wrl ;%f-points ;%gregg;
 	len: length? points
 	
 	max*: function [blk [block!]][m: 0 foreach b blk [m: max b m] m]
@@ -24,17 +24,18 @@ context [
 	;clear at lines len / 2 ;experimental removal of short amplitudes
 
 	ofs: none
-	zooming: function [face event][
-		mx: face/draw/matrix 
+	zooming: function [event][
+		mx: bx/draw/matrix 
 		ev: event/offset
 		op: get pick [/ *] 0 > event/picked 
 		op2: get pick [* /] 0 > event/picked 
-		face/draw/matrix: reduce [
+		bx/draw/matrix: mx: reduce [
 			sc: mx/1 op 1.1 0 0 sc 
 			mx/5 - ev/x op 1.1 + ev/x
 			mx/6 - ev/y op 1.1 + ev/y
 		]
-		face/draw/4: face/draw/4 op2 1.1
+		dr/draw/matrix: mx
+		bx/draw/4: bx/draw/4 op2 1.09
 		dr/draw/4: dr/draw/4 op2 1.1
 	]
 	moving: function [face event][
@@ -52,7 +53,7 @@ context [
 			keep/only compose/deep [
 				matrix [1 0 0 1 0 0] [
 					pen 192.192.192.192 circle 0x0 (lines/1/3) ;amplitude
-					pen 0.0.255.192 rotate 0 0x0 [line 0x0 (as-pair round lines/1/3 0)]
+					pen 0.0.255.192 rotate 0 0x0 [scale (lines/1/3) 1 line 0x0 1x0];[line 0x0 (as-pair round lines/1/3 0)]
 				]
 			]
 		]
@@ -94,9 +95,9 @@ context [
 				]
 				on-wheel: func [face event][either event/ctrl? [
 					face/rate: max 1 face/rate + to-integer event/picked
-				][zooming face event zooming dr event show parent]]
-				on-alt-down: func [face event][ofs: event/offset]
-				on-over: func [face event][if event/alt-down? [moving face event show face/parent]]
+				][zooming event show face/parent]]
+				on-mid-down: func [face event][ofs: event/offset]
+				on-over: func [face event][if event/mid-down? [moving face event show face/parent]]
 			]
 		]
 		rate 20 
