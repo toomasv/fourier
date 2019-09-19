@@ -12,7 +12,7 @@ context [
 	;][
 	;	load %wrl;%f-points
 	;]
-	points: load %coffee ;%wrl ;%f-points ;%gregg;
+	points: load %coffee ;%world %fourier %logo
 	len: length? points
 	
 	max*: function [blk [block!]][m: 0 foreach b blk [m: max b m] m]
