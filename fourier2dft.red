@@ -10,7 +10,7 @@ context [
 	max*: function [blk [block!]][m: 0 foreach b blk [m: max b m] m]
 	min*: function [blk [block!]][m: blk/1 foreach b blk [m: min b m] m]
 
-	points: load %f-points ;%logo-points ;
+	points: load %fourier ;%logo %coffee %world
 
 	mx: max* points
 	mn: min* points
