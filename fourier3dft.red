@@ -21,7 +21,7 @@ context [
 	
 	lines: dftc points
 	sort/compare lines func [a b][a/3 < b/3]
-	;clear at lines len / 2 ;experimental removal of short amplitudes
+	clear at lines len / 2 ;experimental removal of short amplitudes
 
 	ofs: none
 	zooming: function [event][
@@ -53,7 +53,7 @@ context [
 			keep/only compose/deep [
 				matrix [1 0 0 1 0 0] [
 					pen 192.192.192.192 circle 0x0 (lines/1/3) ;amplitude
-					pen 0.0.255.192 rotate 0 0x0 [scale (lines/1/3) 1 line 0x0 1x0];[line 0x0 (as-pair round lines/1/3 0)]
+					pen 0.0.255.192 rotate 0 0x0 [scale (lines/1/3) 1 line 0x0 1x0]
 				]
 			]
 		]
@@ -80,14 +80,17 @@ context [
 		show face/parent
 	]
 	;canvas: draw 600x600 [fill-pen white]  ;for dotty figure
-	lay: layout/tight compose [
+	lay: layout/tight/flags compose [
+		on-resize [dr/size: bx/size: face/size show face]
 		;at 0x0 can: image 600x600 canvas  ;for dotty figure
 		at 0x0 dr: box 600x600 white with [
 			draw: copy [matrix [1 0 0 1 0 0] line-width 2 pen orange spline]
 		]
 		bx: box 600x600 0.0.0.254 all-over with [
+			menu: ["Probe" probe]
 			draw: drw
 			actors: object [
+				on-menu: func [face event][probe face/draw]
 				on-time: func [face event] code
 				on-down: func [face event][
 					face/rate: either face/rate [rt: face/rate none][rt]
@@ -101,7 +104,7 @@ context [
 			]
 		]
 		rate 20 
-	]
+	] 'resize
 	system/view/auto-sync?: off
 	view lay
 ]
