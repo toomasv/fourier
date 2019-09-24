@@ -1,6 +1,6 @@
 Red [
-	File: %fourier3dft.red
 	Description: {Discrete Fourier Transform with complex nums}
+	File: %fourier3dft.red
 	Needs: View
 	Date: 13-Sep-2019
 	Author: {Toomas Vooglaid}
@@ -8,12 +8,13 @@ Red [
 context [
 	#include %dftc.red
 	
-	points: %coffee ;%world ;%fourier 
+	points: load %coffee ;%world ;%fourier 
 	len: length? points
 	
-	max*: function [blk [block!]][m: 0 foreach b blk [m: max b m] m]
-	half: (max* points) / 2
-	forall points [points/1: points/1 - half]
+	;max*: function [blk [block!]][m: 0 foreach b blk [m: max b m] m]
+	;half: (max* points) / 2
+	avg: average points
+	forall points [points/1: points/1 - avg] ; half
 	
 	probe lines: dftc points
 	sort/compare lines func [a b][a/2 < b/2]
