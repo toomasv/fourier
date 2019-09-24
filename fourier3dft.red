@@ -1,4 +1,5 @@
 Red [
+	File: %fourier3dft.red
 	Description: {Discrete Fourier Transform with complex nums}
 	Needs: View
 	Date: 13-Sep-2019
@@ -7,7 +8,7 @@ Red [
 context [
 	#include %dftc.red
 	
-	points: load %coffee ;%world ;%fourier 
+	points: %coffee ;%world ;%fourier 
 	len: length? points
 	
 	max*: function [blk [block!]][m: 0 foreach b blk [m: max b m] m]
