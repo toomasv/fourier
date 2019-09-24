@@ -7,7 +7,7 @@ Red [
 context [
 	#include %dftc.red
 	
-	points: load %coffee ;%world ;%fourier ;%gregg;
+	points: load %coffee ;%world ;%fourier 
 	len: length? points
 	
 	max*: function [blk [block!]][m: 0 foreach b blk [m: max b m] m]
