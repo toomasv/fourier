@@ -7,21 +7,16 @@ Red [
 context [
 	#include %dftc.red
 	
-	;points: either file? file: system/script/args [
-	;	load file
-	;][
-	;	load %wrl;%f-points
-	;]
-	points: load %coffee ;%world %fourier %logo
+	points: load %coffee ;%world ;%fourier ;%gregg;
 	len: length? points
 	
 	max*: function [blk [block!]][m: 0 foreach b blk [m: max b m] m]
 	half: (max* points) / 2
 	forall points [points/1: points/1 - half]
 	
-	lines: dftc points
-	sort/compare lines func [a b][a/3 < b/3]
-	clear at lines len / 2 ;experimental removal of short amplitudes
+	probe lines: dftc points
+	sort/compare lines func [a b][a/2 < b/2]
+	;clear at lines len / 2 ;experimental removal of short amplitudes
 
 	ofs: none
 	zooming: function [event][
@@ -52,8 +47,8 @@ context [
 		forall lines [
 			keep/only compose/deep [
 				matrix [1 0 0 1 0 0] [
-					pen 192.192.192.192 circle 0x0 (lines/1/3) ;amplitude
-					pen 0.0.255.192 rotate 0 0x0 [scale (lines/1/3) 1 line 0x0 1x0]
+					pen 192.192.192.192 circle 0x0 (lines/1/2) ;amplitude
+					pen 0.0.255.192 rotate 0 0x0 [scale (lines/1/2) 1 line 0x0 1x0]
 				]
 			]
 		]
@@ -67,7 +62,7 @@ context [
 		time: time + dt
 		draw: head face/draw/5
 		forall lines [
-			set [phase freq amp] lines/1
+			set [freq amp phase] lines/1
 			draw/1/2/5: x0 
 			draw/1/2/6: y0
 			ang: draw/1/3/9: (time * freq + phase)
